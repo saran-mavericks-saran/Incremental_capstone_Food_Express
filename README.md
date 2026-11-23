@@ -49,3 +49,6 @@ Run the verification script to confirm accurate row counts across all tables and
 Entity-Relationship (ER) Diagram
 
 The ER diagram illustrating all six entities, attributes, keys, and Many-to-One relationships was created using draw.io and is included in the repository for reference.
+<img width="896" height="287" alt="image" src="https://github.com/user-attachments/assets/bf6d8d07-4b89-4737-b233-595d49f12ea9" />
+
+
