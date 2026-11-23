@@ -1,48 +1,51 @@
-FoodExpress – Sprint 1: Database Setup (FoodExpressDB)
+FoodExpress – Food Delivery Platform (Sprint 1: Database)
 
-This repository contains the Sprint 1 database deliverables for FoodExpress (Urban Bite Technologies), including the Entity-Relationship (ER) diagram, SQL Server DDL scripts, sample seed data, and schema constraint verification scripts.
+FoodExpress is a food delivery marketplace developed for Urban Bite Technologies to connect local restaurants, delivery riders, and customers. This repository contains the Sprint 1 database deliverables for FoodExpressDB, built using SQL Server.
 
-Repository Structure
+Overview
 
-FoodExpress/
-├── sql/
-│   ├── 01_create_database.sql   # Creates FoodExpressDB
-│   ├── 02_create_tables.sql     # Creates all 6 normalized tables with PKs, FKs, and constraints
-│   ├── 03_seed_data.sql         # Inserts 10+ sample rows per table and 200 rows in OrderItem
-│   └── 04_verify_schema.sql     # Validates row counts and tests UNIQUE, CHECK, DEFAULT, and FK rules
-├── docs/
-│   └── FoodExpressDB_ERD.drawio # ER diagram showing all 6 entities and relationships
-└── README.md
+The database is designed in Third Normal Form (3NF) to manage customer profiles, restaurant menus, rider availability, and end-to-end order tracking while enforcing strict data integrity through primary keys, foreign keys, CHECK constraints, UNIQUE constraints, and default values.
 
+Entities & Relationships
 
-Database Schema Overview
+Customer: Stores customer contact details and delivery addresses (Phone is unique).
 
-FoodExpressDB consists of 6 normalized tables with enforced referential integrity:
+Restaurant: Stores restaurant details, cuisine types, city, and hourly order capacity (CapacityPerHour > 0).
 
-Customer (CustomerID PK, FirstName, LastName, Phone UNIQUE, Address)
+MenuItem: Links menu items and pricing (Price >= 0) to a specific restaurant (Many-to-One with Restaurant).
 
-Restaurant (RestaurantID PK, Name, Cuisine, City, CapacityPerHour > 0)
+Rider: Tracks delivery riders, vehicle types, and availability status (defaults to 'Offline').
 
-MenuItem (ItemID PK, RestaurantID FK, ItemName, Price >= 0)
+Orders: Records customer orders, assigned restaurant, assigned rider, order timestamp, status (defaults to 'Placed'), and total amount (TotalAmount >= 0).
 
-Rider (RiderID PK, FirstName, LastName, VehicleType, Status DEFAULT 'Offline')
+OrderItem: Stores individual line items and quantities (Quantity > 0) for each order (Many-to-One with Orders and MenuItem).
 
-[Order] (OrderID PK, CustomerID FK, RestaurantID FK, RiderID FK, OrderDate, Status DEFAULT 'Placed', TotalAmount >= 0)
+Setup & Execution Instructions
 
-OrderItem (OrderItemID PK, OrderID FK, ItemID FK, Quantity > 0)
+Create the Database:
+Connect to your SQL Server instance in SQL Server Management Studio (SSMS) and create the FoodExpressDB database.
 
-Setup & Execution Steps (SQL Server)
+Create Tables & Constraints:
+Select FoodExpressDB and execute the DDL script to create all six tables along with their primary keys, foreign keys, default values, and CHECK constraints.
 
-Open SQL Server Management Studio (SSMS) and connect to your local SQL Server instance.
+Load Sample Data:
+Execute the seed script to populate the database with initial test data:
 
-Create the Database: Open and execute sql/01_create_database.sql.
+10 Customers
 
-Create the Tables: Open and execute sql/02_create_tables.sql against FoodExpressDB.
+10 Restaurants
 
-Insert Sample Data: Open and execute sql/03_seed_data.sql to populate 10 customers, 10 restaurants, 10 menu items, 10 riders, 20 orders, and 200 order items.
+10 Menu Items
 
-Verify Constraints: Run sql/04_verify_schema.sql to confirm table row counts and verify that valid defaults succeed while invalid UNIQUE, CHECK, and FOREIGN KEY inserts are rejected.
+10 Riders
 
-ER Diagram
+20 Orders
 
-The editable ER diagram (docs/FoodExpressDB_ERD.drawio) can be opened and viewed using draw.io.
+200 Order Items
+
+Verify Schema Integrity:
+Run the verification script to confirm accurate row counts across all tables and validate that default values apply properly while invalid UNIQUE, CHECK, and FOREIGN KEY entries are rejected.
+
+Entity-Relationship (ER) Diagram
+
+The ER diagram illustrating all six entities, attributes, keys, and Many-to-One relationships was created using draw.io and is included in the repository for reference.
